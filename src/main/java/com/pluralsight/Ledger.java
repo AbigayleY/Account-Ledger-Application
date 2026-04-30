@@ -1,32 +1,81 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Scanner;
 
 public class Ledger {
 
-    public static void displayAllEntries() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
-            ArrayList<String> lines = new ArrayList<>();
+    //adding Static to scanner so it can scan through all methods
+    static Scanner scanner = new Scanner(System.in);
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
+    public static void displayLedger() {
+        boolean inLedger = true;
+
+
+        while (inLedger) {
+            System.out.println("\n====== | LEDGER | ======");
+            System.out.println("\n Please choose an option: ");
+
+            System.out.println("A) All");
+            System.out.println("D) Deposits");
+            System.out.println("P) Payments");
+            System.out.println("R) Reports");
+            System.out.println("H) Home");
+            String choice = scanner.nextLine().toUpperCase().trim();
+
+            switch (choice) {
+                case "A":
+                    displayEntries(TransactionManager.getAllTransactions());
+                    break;
+                case "D":
+                    displayEntries(TransactionManager.getDeposits());
+                    break;
+                case "P":
+                    displayEntries(TransactionManager.getPayments());
+                    break;
+                case "R":
+                    showReports();
+                    break;
+                case "H":
+                    inLedger = false;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
             }
+        }
+    }
 
-            reader.close();
+    private static void displayEntries(ArrayList<Transactions> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            System.out.println(list.get(i));
+        }
+    }
 
-            Collections.reverse(lines);
+    private static void showReports() {
+        System.out.println("\n====== REPORTS ======");
+        System.out.println("\n Please choose an option: ");
 
-            for (String l : lines) {
-                System.out.println(l);
-            }
+        System.out.println("1) Month To Date");
+        System.out.println("2) Previous Month");
+        System.out.println("3) Year To Date");
+        System.out.println("4) Previous Year");
+        System.out.println("5) Search by Vendor");
+        System.out.println("0) Back");
+        String choice = scanner.nextLine().trim();
 
-        } catch (Exception e) {
-            System.out.println("Error reading file.");
+        switch (choice) {
+            case "1":
+                displayEntries(TransactionManager.monthToDate());
+                break;
+            case "5":
+                System.out.print("Enter vendor: ");
+                String vendor = scanner.nextLine();
+                displayEntries(TransactionManager.searchByVendor(vendor));
+                break;
+            case "0":
+                return;
+            default:
+                System.out.println("Not implemented yet.");
         }
     }
 }
