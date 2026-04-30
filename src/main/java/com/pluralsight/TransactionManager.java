@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.format.DateTimeFormatter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,7 +18,8 @@ public class TransactionManager {
         try (FileWriter writer = new FileWriter(TCSV, true)) {
 
             String date = LocalDate.now().toString();
-            String time = LocalTime.now().toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+            String time = LocalTime.now().format(formatter).toString();
 
             writer.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount + "\n");
 
@@ -48,6 +50,7 @@ public class TransactionManager {
                         parts[2],
                         parts[3],
                         Double.parseDouble(parts[4])
+
                 );
 
                 list.add(t);

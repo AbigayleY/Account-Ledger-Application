@@ -46,9 +46,12 @@ public class Ledger {
     }
 
     private static void displayEntries(ArrayList<Transactions> list) {
+        if (list.isEmpty()) {
+            System.out.println("No transactions found.");
+            return;}
+
         for (int i = list.size() - 1; i >= 0; i--) {
-            System.out.println(list.get(i));
-        }
+            System.out.println(list.get(i));}
     }
 
     private static void showReports() {
@@ -75,7 +78,7 @@ public class Ledger {
             case "0":
                 return;
             default:
-                System.out.println("Not implemented yet.");
+                System.out.println("Please try again, invalid option.");
         }
     }
 }

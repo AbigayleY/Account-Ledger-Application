@@ -42,32 +42,46 @@ public class Main {
         }
     }
 
+    private static String userInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            if (!input.isEmpty()) {
+                return input;}
+            System.out.println("Input cannot be empty.");
+        }
+    }
+
+    private static double userAmount() {
+        while (true) {
+            try {
+                String input = scanner.nextLine();
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid number. Try again: ");
+            }
+        }
+    }
 
     private static void addDeposit() {
 
-        System.out.print("Description of item: ");
-        String description = scanner.nextLine();
+        String description = userInput("Description: ");
+        String vendor = userInput("Vendor: ");
 
-        System.out.print("Vendor's Name: ");
-        String vendor = scanner.nextLine();
-
-        System.out.print("Amount: "); //parseDouble converts String into Double(Decimal point or price)
-        double amount = Double.parseDouble(scanner.nextLine());
+        System.out.print("Amount: ");
+        double amount = userAmount();
 
         TransactionManager.saveTransaction(description, vendor, amount);
     }
 
     private static void addPayment() {
-        System.out.print("Description: ");
-        String description = scanner.nextLine();
-
-        System.out.print("Vendor: ");
-        String vendor = scanner.nextLine();
+        String description = userInput("Description: ");
+        String vendor = userInput("Vendor: ");
 
         System.out.print("Amount: ");
-        double amount = Double.parseDouble(scanner.nextLine());
+        double amount = userAmount();
 
-        //
         TransactionManager.saveTransaction(description, vendor, -Math.abs(amount));
     }
 }
