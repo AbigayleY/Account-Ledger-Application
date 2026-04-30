@@ -45,6 +45,7 @@ public class Ledger {
         }
     }
 
+
     private static void displayEntries(ArrayList<Transactions> list) {
         if (list.isEmpty()) {
             System.out.println("No transactions found.");
