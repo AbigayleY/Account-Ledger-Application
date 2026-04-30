@@ -13,7 +13,7 @@ public class Ledger {
 
 
         while (inLedger) {
-            System.out.println("\n====== | LEDGER | ======");
+            System.out.println("\n====== | 📜LEDGER📜 | ======");
             System.out.println("\n Please choose an option: ");
 
             System.out.println("A) All");
@@ -40,7 +40,7 @@ public class Ledger {
                     inLedger = false;
                     break;
                 default:
-                    System.out.println("Invalid option.");
+                    System.out.println("❌ Invalid option. ❌");
             }
         }
     }
@@ -48,7 +48,7 @@ public class Ledger {
 
     private static void displayEntries(ArrayList<Transactions> list) {
         if (list.isEmpty()) {
-            System.out.println("No transactions found.");
+            System.out.println("No transactions found.🫥");
             return;}
 
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -56,7 +56,7 @@ public class Ledger {
     }
 
     private static void showReports() {
-        System.out.println("\n====== REPORTS ======");
+        System.out.println("\n====== | ✍️REPORTS✍️ | ======");
         System.out.println("\n Please choose an option: ");
 
         System.out.println("1) Month To Date");
@@ -79,7 +79,7 @@ public class Ledger {
             case "0":
                 return;
             default:
-                System.out.println("Please try again, invalid option.");
+                System.out.println("❌ Please try again, invalid option. ❌");
         }
     }
 }

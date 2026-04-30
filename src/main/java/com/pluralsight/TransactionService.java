@@ -21,10 +21,10 @@ public class TransactionService {
 
             writer.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount + "\n");
 
-            System.out.println("Transaction saved!");
+            System.out.println("Transaction saved!✅");
 
         } catch (IOException e) {
-            System.out.println("Error! Could not write file.");
+            System.out.println("❌ Error! Could not write file. ❌");
         }
     }
     //referencing workbook 3a Arraylist<Transaction> . . .
@@ -39,7 +39,7 @@ public class TransactionService {
                 String[] parts = line.split("\\|");
 
                 if (parts.length != 5) {
-                    System.out.println("Skipping invalid line: " + line);
+                    System.out.println(" Skipping invalid line: 🏃‍♀️‍➡️" + line);
                     continue;}
 
                 Transactions t = new Transactions(
@@ -55,7 +55,7 @@ public class TransactionService {
             }
 
         } catch (Exception e) {
-            System.out.println("Error reading file.");
+            System.out.println(" ❌ Error reading file. ❌");
         }
 
         return list;

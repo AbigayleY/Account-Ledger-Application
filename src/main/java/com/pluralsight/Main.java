@@ -11,13 +11,13 @@ public class Main {
         boolean isRunning = true;
 
         while (isRunning) {
-            System.out.println("\n====== | ACCOUNT LEDGER APP HOME SCREEN | ======");
+            System.out.println("\n====== | 🏦 ACCOUNT LEDGER APP HOME SCREEN 🏦 | ======");
             System.out.println("\nPlease choose an Option: ");
 
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
-            System.out.println("L) Ledger");
-            System.out.println("X) Exit");
+            System.out.println("L) Ledger 📜");
+            System.out.println("X) Exit ");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
@@ -33,12 +33,12 @@ public class Main {
                 case "X": //Exit
                     System.out.println("Exiting. . . ");
                     Thread.sleep(1000);
-                    System.out.println("Exiting complete. Have a nice day!");
+                    System.out.println("👋 Exiting complete. Have a nice day! 👋");
                     isRunning = false;
                     break;
 
                 default:
-                    System.out.println("Please Try again, invalid option.");
+                    System.out.println("❌ Please Try again, invalid option. ❌");
             }
         }
     }
@@ -50,7 +50,7 @@ public class Main {
 
             if (!input.isEmpty()) {
                 return input;}
-            System.out.println("Input cannot be empty. Please try again.");
+            System.out.println("❌ Input cannot be empty. Please try again. ❌");
         }
     }
 
@@ -60,7 +60,7 @@ public class Main {
                 String input = scanner.nextLine();
                 return Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                System.out.print("Invalid number. Try again: ");
+                System.out.print("❌ Invalid number,Try again. ❌");
             }
         }
     }
