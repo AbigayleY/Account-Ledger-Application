@@ -6,12 +6,12 @@ public class Main {
     //adding scanner here so it's shared across all objects
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         boolean isRunning = true;
 
         while (isRunning) {
-            System.out.println("\n====== | HOME SCREEN | ======");
+            System.out.println("\n====== | ACCOUNT LEDGER APP HOME SCREEN | ======");
             System.out.println("\nPlease choose an Option: ");
 
             System.out.println("D) Add Deposit");
@@ -32,6 +32,7 @@ public class Main {
                     break;
                 case "X": //Exit
                     System.out.println("Exiting. . . ");
+                    Thread.sleep(1000);
                     System.out.println("Exiting complete. Have a nice day!");
                     isRunning = false;
                     break;
@@ -72,7 +73,7 @@ public class Main {
         System.out.print("Amount: ");
         double amount = userAmount();
 
-        TransactionManager.saveTransaction(description, vendor, amount);
+        TransactionService.saveTransaction(description, vendor, amount);
     }
 
     private static void addPayment() {
@@ -82,6 +83,6 @@ public class Main {
         System.out.print("Amount: ");
         double amount = userAmount();
 
-        TransactionManager.saveTransaction(description, vendor, -Math.abs(amount));
+        TransactionService.saveTransaction(description, vendor, -Math.abs(amount));
     }
 }

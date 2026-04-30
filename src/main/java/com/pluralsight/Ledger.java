@@ -25,13 +25,13 @@ public class Ledger {
 
             switch (choice) {
                 case "A":
-                    displayEntries(TransactionManager.getAllTransactions());
+                    displayEntries(TransactionService.getAllTransactions());
                     break;
                 case "D":
-                    displayEntries(TransactionManager.getDeposits());
+                    displayEntries(TransactionService.getDeposits());
                     break;
                 case "P":
-                    displayEntries(TransactionManager.getPayments());
+                    displayEntries(TransactionService.getPayments());
                     break;
                 case "R":
                     showReports();
@@ -68,12 +68,12 @@ public class Ledger {
 
         switch (choice) {
             case "1":
-                displayEntries(TransactionManager.monthToDate());
+                displayEntries(TransactionService.monthToDate());
                 break;
             case "5":
                 System.out.print("Enter vendor: ");
                 String vendor = scanner.nextLine();
-                displayEntries(TransactionManager.searchByVendor(vendor));
+                displayEntries(TransactionService.searchByVendor(vendor));
                 break;
             case "0":
                 return;

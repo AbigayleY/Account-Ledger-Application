@@ -9,13 +9,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class TransactionManager {
-
-    private static final String TCSV = "transactions.csv";
+public class TransactionService {
 
 
     public static void saveTransaction(String description, String vendor, double amount) {
-        try (FileWriter writer = new FileWriter(TCSV, true)) {
+        try (FileWriter writer = new FileWriter("transactions.csv")) {
 
             String date = LocalDate.now().toString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -29,11 +27,11 @@ public class TransactionManager {
             System.out.println("Error! Could not write file.");
         }
     }
-
+    //referencing workbook 3a Arraylist<Transaction> . . .
     public static ArrayList<Transactions> getAllTransactions() {
         ArrayList<Transactions> list = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(TCSV))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("transaction.csv"))) {
 
             String line;
 
