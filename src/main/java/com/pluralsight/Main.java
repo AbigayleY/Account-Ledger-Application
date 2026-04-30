@@ -49,7 +49,7 @@ public class Main {
 
             if (!input.isEmpty()) {
                 return input;}
-            System.out.println("Input cannot be empty.");
+            System.out.println("Input cannot be empty. Please try again.");
         }
     }
 

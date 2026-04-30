@@ -19,7 +19,7 @@ public class TransactionManager {
 
             String date = LocalDate.now().toString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-            String time = LocalTime.now().format(formatter).toString();
+            String time = LocalTime.now().format(formatter);
 
             writer.write(date + "|" + time + "|" + description + "|" + vendor + "|" + amount + "\n");
 
