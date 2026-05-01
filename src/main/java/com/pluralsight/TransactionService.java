@@ -31,7 +31,7 @@ public class TransactionService {
     public static ArrayList<Transactions> getAllTransactions() {
         ArrayList<Transactions> list = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transaction.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
 
             String line;
 
@@ -48,16 +48,12 @@ public class TransactionService {
                         parts[2],
                         parts[3],
                         Double.parseDouble(parts[4])
-
                 );
-
                 list.add(t);
             }
-
         } catch (Exception e) {
             System.out.println(" ❌ Error reading file. ❌");
         }
-
         return list;
     }
 
@@ -69,7 +65,6 @@ public class TransactionService {
                 result.add(t);
             }
         }
-
         return result;
     }
 
@@ -81,7 +76,6 @@ public class TransactionService {
                 result.add(t);
             }
         }
-
         return result;
     }
 
@@ -104,6 +98,57 @@ public class TransactionService {
             LocalDate date = LocalDate.parse(t.getDate());
 
             if (date.getMonth() == now.getMonth() && date.getYear() == now.getYear()) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+    public static ArrayList<Transactions> previousMonth() {
+        ArrayList<Transactions> result = new ArrayList<>();
+
+        LocalDate today = LocalDate.now();
+
+        LocalDate firstDayPrevMonth = today.minusMonths(1).withDayOfMonth(1);
+        LocalDate lastDayPrevMonth = today.withDayOfMonth(1).minusDays(1);
+
+        for (Transactions t : getAllTransactions()) {
+            LocalDate date = LocalDate.parse(t.getDate());
+
+            if (!date.isBefore(firstDayPrevMonth) && !date.isAfter(lastDayPrevMonth)) {
+                result.add(t);
+            }
+        }
+
+        return result;
+    }
+    public static ArrayList<Transactions> yearToDate() {
+        ArrayList<Transactions> result = new ArrayList<>();
+
+        LocalDate today = LocalDate.now();
+        LocalDate startOfYear = today.withDayOfYear(1);
+
+        for (Transactions t : getAllTransactions()) {
+            LocalDate date = LocalDate.parse(t.getDate());
+
+            if (!date.isBefore(startOfYear) && !date.isAfter(today)) {
+                result.add(t);
+            }
+        }
+
+        return result;
+    }
+    public static ArrayList<Transactions> previousYear() {
+        ArrayList<Transactions> result = new ArrayList<>();
+
+        LocalDate today = LocalDate.now();
+
+        LocalDate startPrevYear = today.minusYears(1).withDayOfYear(1);
+        LocalDate endPrevYear = today.withDayOfYear(1).minusDays(1);
+
+        for (Transactions t : getAllTransactions()) {
+            LocalDate date = LocalDate.parse(t.getDate());
+
+            if (!date.isBefore(startPrevYear) && !date.isAfter(endPrevYear)) {
                 result.add(t);
             }
         }

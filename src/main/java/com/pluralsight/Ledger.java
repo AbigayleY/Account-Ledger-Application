@@ -71,6 +71,12 @@ public class Ledger {
             case "1":
                 displayEntries(TransactionService.monthToDate());
                 break;
+            case "2":
+                displayEntries(TransactionService.previousMonth());
+            case "3":
+                displayEntries(TransactionService.yearToDate());
+            case "4":
+                displayEntries(TransactionService.previousYear());
             case "5":
                 System.out.print("Enter vendor: ");
                 String vendor = scanner.nextLine();
