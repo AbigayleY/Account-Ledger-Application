@@ -13,7 +13,7 @@ public class TransactionService {
 
 
     public static void saveTransaction(String description, String vendor, double amount) {
-        try (FileWriter writer = new FileWriter("transactions.csv")) {
+        try (FileWriter writer = new FileWriter("transactions.csv", true)) {
 
             String date = LocalDate.now().toString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -38,10 +38,12 @@ public class TransactionService {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
 
+                // 5 lines of data! in transactions.csv
                 if (parts.length != 5) {
                     System.out.println(" Skipping invalid line: 🏃‍♀️‍➡️" + line);
                     continue;}
 
+                //uses said 5 values and the last part is a double! $$
                 Transactions t = new Transactions(
                         parts[0],
                         parts[1],

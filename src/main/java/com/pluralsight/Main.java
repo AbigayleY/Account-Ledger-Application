@@ -42,7 +42,7 @@ public class Main {
             }
         }
     }
-
+    // error handling for empty input
     private static String userInput(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -59,6 +59,8 @@ public class Main {
             try {
                 String input = scanner.nextLine();
                 return Double.parseDouble(input);
+
+            //catches error if user inputs text
             } catch (NumberFormatException e) {
                 System.out.print("❌ Invalid number,Try again. ❌");
             }
