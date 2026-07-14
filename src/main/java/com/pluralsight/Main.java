@@ -12,20 +12,20 @@ public class Main {
 
         while (isRunning) {
             System.out.println("\n====== | 🏦 ACCOUNT LEDGER APP HOME SCREEN 🏦 | ======");
-            System.out.println("\nPlease choose an Option: ");
 
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
             System.out.println("L) Ledger 📜");
             System.out.println("X) Exit ");
+            System.out.println("\nPlease choose an Option: ");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
                 case "D": //deposit info, save to csv
-                    addDeposit();
+                    addTransaction(true);
                     break;
                 case "P": //debit info, save to csv
-                    addPayment();
+                    addTransaction(false);
                     break;
                 case "L": //displayLedger
                     Ledger.displayLedger();
@@ -57,34 +57,32 @@ public class Main {
     private static double userAmount() {
         while (true) {
             try {
-                String input = scanner.nextLine();
-                return Double.parseDouble(input);
+                double amount = Double.parseDouble(scanner.nextLine());
+
+                if (amount <= 0){
+                    System.out.println("❌ Amount must be greater than 0. ❌");
+                    continue;
+                }
+
+                return amount;
 
             //catches error if user inputs text
             } catch (NumberFormatException e) {
-                System.out.print("❌ Invalid number,Try again. ❌");
+                System.out.print("❌ Invalid amount. Please enter a number: ❌");
             }
         }
     }
 
-    private static void addDeposit() {
-
+    private static void addTransaction(boolean isDeposit) {
         String description = userInput("Description: ");
         String vendor = userInput("Vendor: ");
 
         System.out.print("Amount: ");
         double amount = userAmount();
 
+        if (!isDeposit) {
+            amount = -Math.abs(amount);
+        }
         TransactionService.saveTransaction(description, vendor, amount);
-    }
-
-    private static void addPayment() {
-        String description = userInput("Description: ");
-        String vendor = userInput("Vendor: ");
-
-        System.out.print("Amount: ");
-        double amount = userAmount();
-
-        TransactionService.saveTransaction(description, vendor, -Math.abs(amount));
     }
 }

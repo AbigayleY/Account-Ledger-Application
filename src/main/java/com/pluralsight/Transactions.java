@@ -22,9 +22,18 @@ public class Transactions {
         return vendor;}
     public String getDate() {
         return date;}
+    public String getDescription() {
+        return description;}
+    public String getTime() {
+        return time;}
 
     //formatting to be  date | time | description | vendor | amount
     public String toString() {
         return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
     }
+
+    public boolean isDeposit() {
+        return false;}
+    public boolean isPayment() {
+        return false;}
 }
