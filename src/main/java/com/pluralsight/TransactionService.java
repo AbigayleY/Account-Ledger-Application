@@ -6,18 +6,12 @@ import java.util.ArrayList;
 
 public class TransactionService {
 
-
     //  Saves a transaction by passing it to the file manager.
-    public static void saveTransaction(String description,
-                                       String vendor,
-                                       double amount) {
-
+    public static void saveTransaction(String description,String vendor,double amount) {
         TransactionFileManager.saveTransaction(
                 description,
                 vendor,
-                amount);
-    }
-
+                amount);}
 
      // Returns every transaction.
     public static ArrayList<Transactions> getAllTransactions() {
@@ -29,9 +23,7 @@ public class TransactionService {
         ArrayList<Transactions> deposits = new ArrayList<>();
         for (Transactions t : getAllTransactions()) {
             if (t.isDeposit()) {
-
-                deposits.add(t);
-            }
+                deposits.add(t);}
         }
         return deposits;
     }
@@ -41,9 +33,7 @@ public class TransactionService {
         ArrayList<Transactions> payments = new ArrayList<>();
         for (Transactions t : getAllTransactions()) {
             if (t.isPayment()) {
-
-                payments.add(t);
-            }
+                payments.add(t);}
         }
         return payments;
     }
@@ -56,8 +46,7 @@ public class TransactionService {
                     .toLowerCase()
                     .contains(vendor.toLowerCase())) {
 
-                results.add(t);
-            }
+                results.add(t);}
         }
         return results;
     }
@@ -71,17 +60,14 @@ public class TransactionService {
             if (date.getMonth() == today.getMonth()
                     && date.getYear() == today.getYear()) {
 
-                results.add(t);
-            }
+                results.add(t);}
         }
         return results;
-
     }
 
 
     //  Previous Month Report
     public static ArrayList<Transactions> previousMonth() {
-
         ArrayList<Transactions> results = new ArrayList<>();
         LocalDate today = LocalDate.now();
 
@@ -95,27 +81,24 @@ public class TransactionService {
             if (!date.isBefore(firstDay)
                     && !date.isAfter(lastDay)) {
 
-                results.add(t);
-            }
+                results.add(t);}
         }
         return results;
-
     }
 
      // Year To Date Report
     public static ArrayList<Transactions> yearToDate() {
         ArrayList<Transactions> results = new ArrayList<>();
         LocalDate today = LocalDate.now();
-
         LocalDate start =
                 today.withDayOfYear(1);
+
         for (Transactions t : getAllTransactions()) {
             LocalDate date = LocalDate.parse(t.getDate());
             if (!date.isBefore(start)
                     && !date.isAfter(today)) {
 
-                results.add(t);
-            }
+                results.add(t);}
         }
         return results;
     }
@@ -136,8 +119,7 @@ public class TransactionService {
             if (!date.isBefore(start)
                     && !date.isAfter(end)) {
 
-                results.add(t);
-            }
+                results.add(t);}
         }
         return results;
     }
@@ -162,19 +144,16 @@ public class TransactionService {
                 start = LocalDate.parse(startDate);
             }
             if (!endDate.isBlank()) {
-                end = LocalDate.parse(endDate);
-            }
+                end = LocalDate.parse(endDate);}
         }
         catch (DateTimeParseException e) {
-
             System.out.println("❌ Invalid date format. Use yyyy-MM-dd.");
             return results;
         }
 
         try {
             if (!amount.isBlank()) {
-                searchAmount = Double.parseDouble(amount);
-            }
+                searchAmount = Double.parseDouble(amount);}
 
         }
         catch (NumberFormatException e) {
@@ -190,7 +169,6 @@ public class TransactionService {
             if (start != null &&
                     transactionDate.isBefore(start)) {
                 matches = false;}
-
             if (end != null &&
                     transactionDate.isAfter(end)) {
                 matches = false;}
@@ -200,25 +178,21 @@ public class TransactionService {
                         .toLowerCase()
                         .contains(description.toLowerCase())) {
 
-                    matches = false;
-                }
+                    matches = false;}
             }
             if (!vendor.isBlank()) {
                 if (!t.getVendor()
                         .toLowerCase()
                         .contains(vendor.toLowerCase())) {
 
-                    matches = false;
-                }
+                    matches = false;}
             }
             if (searchAmount != null &&
                     t.getAmount() != searchAmount) {
-
                 matches = false;
             }
             if (matches) {
                 results.add(t);
-
             }
         }
         return results;
