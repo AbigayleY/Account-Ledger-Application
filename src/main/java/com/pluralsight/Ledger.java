@@ -5,34 +5,34 @@ import java.util.Scanner;
 
 public class Ledger {
 
-    //adding Static to scanner so it can scan through all methods
     static Scanner scanner = new Scanner(System.in);
 
     public static void displayLedger() {
         boolean inLedger = true;
 
-
         while (inLedger) {
-            System.out.println("\n====== | 📜LEDGER📜 | ======");
-            System.out.println("\n Please choose an option: ");
+            UI.header("📜  LEDGER", "Transaction history & reports");
 
-            System.out.println("A) View All Transactions");
-            System.out.println("D) View Deposits");
-            System.out.println("P) View Payments");
-            System.out.println("R) Reports");
-            System.out.println("H) Home");
-            System.out.println("\nChoose an option: ");
+            UI.menuOption("A", "View All Transactions");
+            UI.menuOption("D", "View Deposits");
+            UI.menuOption("P", "View Payments");
+            UI.menuOption("R", "Reports");
+            UI.menuOption("H", "Home");
+            UI.blankRow();
+            UI.bottomBorder();
+
+            UI.prompt("Choose an option:");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
                 case "A":
-                    displayEntries(TransactionService.getAllTransactions());
+                    displayEntries(TransactionService.getAllTransactions(), "ALL TRANSACTIONS");
                     break;
                 case "D":
-                    displayEntries(TransactionService.getDeposits());
+                    displayEntries(TransactionService.getDeposits(), "DEPOSITS");
                     break;
                 case "P":
-                    displayEntries(TransactionService.getPayments());
+                    displayEntries(TransactionService.getPayments(), "PAYMENTS");
                     break;
                 case "R":
                     showReports();
@@ -41,110 +41,116 @@ public class Ledger {
                     inLedger = false;
                     break;
                 default:
-                    System.out.println("❌ Invalid option. ❌");
+                    UI.error("Invalid option — please try again.");
             }
         }
     }
 
-    //Display transactions from newest to oldest
-    private static void displayEntries(ArrayList<Transactions> transactions) {
-        if (transactions.isEmpty()) {
-            System.out.println("\nNo transactions found.🫥");
-            return;}
+    // ── Transaction display ────────────────────────────────────────
 
-        System.out.println("\n======= TRANSACTIONS =======");
+    private static void displayEntries(ArrayList<Transactions> transactions, String title) {
+        System.out.println();
+        UI.header("📋  " + title, transactions.size() + " record(s) found");
+        UI.bottomBorder();
+
+        if (transactions.isEmpty()) {
+            System.out.println();
+            UI.error("No transactions found.");
+            return;
+        }
+
+        UI.tableHeader();
+
         for (int i = transactions.size() - 1; i >= 0; i--) {
             Transactions t = transactions.get(i);
-
-            System.out.printf(
-                    "%-12s %-10s %-20s %-20s $%10.2f%n",
+            UI.transactionRow(
                     t.getDate(),
                     t.getTime(),
                     t.getDescription(),
                     t.getVendor(),
-                    t.getAmount());
+                    t.getAmount()
+            );
         }
+        System.out.println();
     }
 
-//Display Reports
+    // ── Reports menu ───────────────────────────────────────────────
+
     private static void showReports() {
         boolean inReports = true;
 
         while (inReports) {
-            System.out.println("\n====== | ✍️REPORTS✍️ | ======");
-            System.out.println("\n Please choose an option: ");
+            UI.header("✍️  REPORTS", "Filter transactions by period");
 
-            System.out.println("1) Month To Date");
-            System.out.println("2) Previous Month");
-            System.out.println("3) Year To Date");
-            System.out.println("4) Previous Year");
-            System.out.println("5) Search by Vendor");
-            System.out.println("0) Back");
-            System.out.println("\nChoose and option: ");
+            UI.menuOption("1", "Month To Date");
+            UI.menuOption("2", "Previous Month");
+            UI.menuOption("3", "Year To Date");
+            UI.menuOption("4", "Previous Year");
+            UI.menuOption("5", "Search by Vendor");
+            UI.menuOption("6", "Custom Search");
+            UI.menuOption("0", "Back");
+            UI.blankRow();
+            UI.bottomBorder();
+
+            UI.prompt("Choose an option:");
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
-                    displayEntries(TransactionService.monthToDate());
+                    displayEntries(TransactionService.monthToDate(), "MONTH TO DATE");
                     break;
-
                 case "2":
-                    displayEntries(TransactionService.previousMonth());
+                    displayEntries(TransactionService.previousMonth(), "PREVIOUS MONTH");
                     break;
-
                 case "3":
-                    displayEntries(TransactionService.yearToDate());
+                    displayEntries(TransactionService.yearToDate(), "YEAR TO DATE");
                     break;
-
                 case "4":
-                    displayEntries(TransactionService.previousYear());
+                    displayEntries(TransactionService.previousYear(), "PREVIOUS YEAR");
                     break;
-
                 case "5":
-                    System.out.print("Enter vendor: ");
+                    UI.prompt("Enter vendor name:");
                     String vendor = scanner.nextLine();
-                    displayEntries(TransactionService.searchByVendor(vendor));
+                    displayEntries(TransactionService.searchByVendor(vendor),
+                            "VENDOR: " + vendor.toUpperCase());
                     break;
-
                 case "6":
                     customSearch();
                     break;
-
                 case "0":
-                    return;
+                    inReports = false;
+                    break;
                 default:
-                    System.out.println("❌ Please try again, invalid option. ❌");
+                    UI.error("Invalid option — please try again.");
             }
         }
     }
 
-    //Bonus Custom Search feature
-    private static void customSearch(){
-        System.out.println("\n ========= CUSTOM SEARCH =========");
-        System.out.println("Leave a field blank to ignore it.\n");
+    // ── Custom search ──────────────────────────────────────────────
 
+    private static void customSearch() {
+        UI.header("🔍  CUSTOM SEARCH", "Leave any field blank to skip it");
+        UI.blankRow();
+        UI.bottomBorder();
 
-        System.out.println("Start Date (yyyy-MM-dd): ");
+        UI.prompt("Start Date (yyyy-MM-dd):");
         String startDate = scanner.nextLine().trim();
 
-        System.out.println("End Date (yyyy-MM-dd): ");
+        UI.prompt("End Date   (yyyy-MM-dd):");
         String endDate = scanner.nextLine().trim();
 
-        System.out.println("Description: ");
+        UI.prompt("Description:");
         String description = scanner.nextLine().trim();
 
-        System.out.println("Vendor: ");
+        UI.prompt("Vendor:");
         String vendor = scanner.nextLine().trim();
 
-        System.out.println("Amount: ");
+        UI.prompt("Amount:");
         String amount = scanner.nextLine().trim();
 
-        displayEntries(TransactionService.customSearch(
-                startDate,
-                endDate,
-                description,
-                vendor,
-                amount));
+        displayEntries(
+                TransactionService.customSearch(startDate, endDate, description, vendor, amount),
+                "CUSTOM SEARCH RESULTS"
+        );
     }
-
 }

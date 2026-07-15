@@ -37,12 +37,11 @@ public class TransactionFileManager {
                             amount + "\n"
             );
 
-            System.out.println("\n✅ Transaction saved successfully! ✅");
+            UI.success("Transaction saved successfully!");
 
         }
         catch (IOException e) {
-
-            System.out.println("\n❌ Unable to save transaction. ❌");
+            UI.error("Unable to save transaction.");
         }
     }
 
@@ -58,9 +57,7 @@ public class TransactionFileManager {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length != 5) {
-                    System.out.println(
-                            "❌ Skipping invalid line: ❌");
-                    System.out.println(line);
+                    UI.error("Skipping invalid line: " + line);
                     continue;
                 }
                 try {
@@ -75,19 +72,15 @@ public class TransactionFileManager {
                     transactions.add(transaction);
                 }
                 catch (NumberFormatException e) {
-                    System.out.println(
-                            "❌ Invalid amount detected. ❌");
-                    System.out.println(line);
+                    UI.error("Invalid amount detected: " + line);
                 }
             }
         }
         catch (FileNotFoundException e) {
-            System.out.println(
-                    "❌ transactions.csv not found. ❌");
+            UI.error("transactions.csv not found.");
         }
         catch (IOException e) {
-            System.out.println(
-                    "❌ Unable to read transactions. ❌");
+            UI.error("Unable to read transactions.");
         }
         return transactions;
     }
